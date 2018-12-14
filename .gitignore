@@ -110,6 +110,7 @@ env.bak/
 venv.bak/
 /static
 /media
+/photos
 
 # Spyder project settings
 .spyderproject
