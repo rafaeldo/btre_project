@@ -17,18 +17,20 @@ def index(request):
     paged_listings = paginator.get_page(page)
 
     context = {
-      'listings': paged_listings
+        'listings': paged_listings
     }
     return render(request, 'listings/listings.html', context)
+
 
 def listing(request, listing_id):
     listing = get_object_or_404(Listing, pk=listing_id)
 
     context = {
-      'listing': listing
+        'listing': listing
     }
 
     return render(request, 'listings/listing.html', context)
+
 
 def search(request):
     queryset_list = Listing.objects.order_by('-list_date')
@@ -37,7 +39,8 @@ def search(request):
     if 'keywords' in request.GET:
         keywords = request.GET['keywords']
         if keywords:
-            queryset_list = queryset_list.filter(description__icontains=keywords)
+            queryset_list = queryset_list.filter(
+                description__icontains=keywords)
 
     # City
     if 'city' in request.GET:
@@ -64,9 +67,10 @@ def search(request):
             queryset_list = queryset_list.filter(price__lte=price)
 
     context = {
-      'state_choices': state_choices,
-      'bedroom_choices': bedroom_choices,
-      'price_choices': price_choices,
-      'listings': queryset_list
+        'state_choices': state_choices,
+        'bedroom_choices': bedroom_choices,
+        'price_choices': price_choices,
+        'listings': queryset_list,
+        'values': request.GET
     }
     return render(request, 'listings/search.html', context)
